@@ -6,7 +6,7 @@
       \parbox[b][\paperheight]{\paperwidth}{%
         \vfill
         \centering
-        \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{Figures/Theme/BG_UMU_v2.pdf}%
+        \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{Figures/Theme/Front-Page.pdf}%
         \vfill
       }%
     }%
@@ -35,7 +35,7 @@
     % Selección de portada en inglés vs español
     \ifthenelse{\equal{\LanguageOption}{english}}{%
       % ======= PORTADA EN INGLÉS =======
-      {\noindent\bfseries\fontsize{12}{14}\selectfont DOCTORAL THESIS\par}
+      {\noindent\bfseries\fontsize{12}{14}\selectfont TESINA FINAL DE CARRERA\par}
       \vspace{0.5cm}
       {\noindent\raggedright\itshape\fontsize{22}{24}\selectfont \titleesp\par}
       \vspace{2cm}
@@ -51,8 +51,7 @@
           \hspace{4cm}\=\kill
           \textbf{\fontsize{12}{10}\selectfont AUTHOR:}\> \GetFirstAuthor \\[0.3cm]
           \textbf{\fontsize{12}{10}\selectfont SUPERVISORS:}\> \GetSupervisor   \\
-                                              \> \GetCoSupervisor    \\
-                                              \> \GetSecCoSupervisor
+                                            
         \end{tabbing}
       \end{minipage}%
       \begin{minipage}[t]{0.1\textwidth}
@@ -62,7 +61,7 @@
       \end{minipage}
     }{%
       % ======= PORTADA EN ESPAÑOL =======
-      {\noindent\bfseries\fontsize{12}{14}\selectfont TESIS DOCTORAL\par}
+      {\noindent\bfseries\fontsize{12}{14}\selectfont TESINA FINAL DE CARRERA\par}
       \vspace{0.5cm}
       {\noindent\raggedright\itshape\fontsize{22}{24}\selectfont \titleesp\par}
       \vspace{2cm}
@@ -74,9 +73,8 @@
         \begin{tabbing}
           \hspace{4cm}\=\kill
           \textbf{\fontsize{12}{10}\selectfont AUTOR:}\> \GetFirstAuthor \\[0.3cm]
-          \textbf{\fontsize{12}{10}\selectfont DIRECTORES:}\> \GetSupervisor   \\
-                                              \> \GetCoSupervisor    \\
-                                              \> \GetSecCoSupervisor
+          \textbf{\fontsize{12}{10}\selectfont DIRECTORA:}\> \GetSupervisor   \\
+
         \end{tabbing}
       \end{minipage}%
       \begin{minipage}[t]{0.45\textwidth}
