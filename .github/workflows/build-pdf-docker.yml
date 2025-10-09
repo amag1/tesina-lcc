@@ -1,0 +1,93 @@
+name: Build LaTeX PDF (Docker)
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]  # Trigger on version tags like v1.0.0
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [created]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Build PDF with Docker
+      run: |
+        # Build the Docker image using the existing Dockerfile
+        docker build -t latex-builder .
+        
+        # Run the compilation
+        docker run --rm -v $PWD:/workspace latex-builder bash -c "
+          echo 'Checking fonts...'
+          fc-list | grep -i 'plex\|garamond\|lato\|crimson' || echo 'Some fonts may not be available'
+          echo 'Building PDF...'
+          make clean
+          make all
+          echo 'Verifying PDF...'
+          if [ -f 'UMUthesis.pdf' ]; then
+            echo 'PDF successfully created!'
+            ls -la UMUthesis.pdf
+          else
+            echo 'Error: PDF was not created!'
+            echo 'Checking for log files...'
+            ls -la *.log 2>/dev/null || echo 'No log files found'
+            exit 1
+          fi
+        "
+        
+    - name: Upload PDF as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: thesis-pdf-docker
+        path: UMUthesis.pdf
+        
+    - name: Upload to release (if release)
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          UMUthesis.pdf
+        name: "Thesis PDF v${{ github.ref_name }}"
+        body: |
+          📚 **Thesis PDF Release**
+          
+          This release contains the automatically generated PDF of the thesis.
+          
+          - **Version**: ${{ github.ref_name }}
+          - **Generated**: ${{ github.run_id }}
+          - **Commit**: ${{ github.sha }}
+        draft: false
+        prerelease: false
+        
+    - name: Create release on tag push
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          UMUthesis.pdf
+        name: "Thesis PDF ${{ github.ref_name }}"
+        body: |
+          📚 **Thesis PDF Release**
+          
+          This release contains the automatically generated PDF of the thesis.
+          
+          **What's included:**
+          - `UMUthesis.pdf` - The complete thesis document
+          
+          **Build Information:**
+          - **Version**: ${{ github.ref_name }}
+          - **Commit**: ${{ github.sha }}
+          - **Build**: ${{ github.run_number }}
+          - **Generated**: ${{ github.run_id }}
+          
+          **Download and Usage:**
+          Download the PDF directly from the assets below.
+        draft: false
+        prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
