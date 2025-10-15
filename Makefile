@@ -1,9 +1,9 @@
-# LaTeX Makefile for UMUthesis project
+# LaTeX Makefile for Tesina LCC Maglione
 # Author: Generated for tesina-lcc project
-# Main document: UMUthesis.tex
+# Main document: Tesina_LCC_Maglione.tex
 
 # Variables
-MAIN = UMUthesis
+MAIN = Tesina_LCC_Maglione
 TEX_FILES = $(wildcard *.tex) $(wildcard Chapters/*.tex) $(wildcard Matter/*.tex) $(wildcard Metadata/*.tex) $(wildcard Chapters/Appendices/*.tex) $(wildcard Chapters/Annexes/*.tex)
 BIB_FILES = $(wildcard Bibliography/*.bib)
 CLS_FILES = $(wildcard *.cls)
@@ -153,7 +153,7 @@ install-deps-debian:
 # Show help
 .PHONY: help
 help:
-	@echo "UMUthesis Makefile - Available targets:"
+	@echo "Tesina LCC Maglione Makefile - Available targets:"
 	@echo ""
 	@echo "  all         - Compile the complete document with XeLaTeX (default)"
 	@echo "  quick       - Quick compilation (single pass, for drafts)"
