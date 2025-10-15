@@ -30,9 +30,9 @@ jobs:
           make clean
           make all
           echo 'Verifying PDF...'
-          if [ -f 'UMUthesis.pdf' ]; then
+          if [ -f 'Tesina_LCC_Maglione.pdf' ]; then
             echo 'PDF successfully created!'
-            ls -la UMUthesis.pdf
+            ls -la Tesina_LCC_Maglione.pdf
           else
             echo 'Error: PDF was not created!'
             echo 'Checking for log files...'
@@ -45,14 +45,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: thesis-pdf-docker
-        path: UMUthesis.pdf
+        path: Tesina_LCC_Maglione.pdf
         
     - name: Upload to release (if release)
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          UMUthesis.pdf
+          Tesina_LCC_Maglione.pdf
         name: "Thesis PDF v${{ github.ref_name }}"
         body: |
           📚 **Thesis PDF Release**
@@ -70,7 +70,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          UMUthesis.pdf
+          Tesina_LCC_Maglione.pdf
         name: "Thesis PDF ${{ github.ref_name }}"
         body: |
           📚 **Thesis PDF Release**
@@ -78,7 +78,7 @@ jobs:
           This release contains the automatically generated PDF of the thesis.
           
           **What's included:**
-          - `UMUthesis.pdf` - The complete thesis document
+          - `Tesina_LCC_Maglione.pdf` - The complete thesis document
           
           **Build Information:**
           - **Version**: ${{ github.ref_name }}
